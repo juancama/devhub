@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\DeveloperHub\Ui\CLI\Developer;
+namespace Jcv\DeveloperHub\Ui\CLI\Developer;
 
-use Colvin\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
-use Colvin\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
+use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
+use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\DeveloperHub\Domain\Service\Developer;
+namespace Jcv\DeveloperHub\Domain\Service\Developer;
 
-use Colvin\Share\Bus\Query\QueryResponse;
+use Jcv\Share\Bus\Query\QueryResponse;
 
 final class DeveloperQueryResponse implements QueryResponse
 {

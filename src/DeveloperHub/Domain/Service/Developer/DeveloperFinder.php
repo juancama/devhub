@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\DeveloperHub\Domain\Service\Developer;
+namespace Jcv\DeveloperHub\Domain\Service\Developer;
 
-use Colvin\DeveloperHub\Domain\Developer\UserName;
+use Jcv\DeveloperHub\Domain\Developer\UserName;
 
 interface DeveloperFinder
 {

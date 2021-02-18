@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\Share\Bus\Query;
+namespace Jcv\Share\Bus\Query;
 
 interface QueryResponse
 {

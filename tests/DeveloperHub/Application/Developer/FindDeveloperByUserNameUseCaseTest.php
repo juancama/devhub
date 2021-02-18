@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Colvin\Tests\DeveloperHub\Application\Developer;
 
-use Colvin\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
-use Colvin\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
-use Colvin\DeveloperHub\Domain\Developer\UserName;
-use Colvin\DeveloperHub\Domain\Service\Developer\DeveloperFinder;
-use Colvin\DeveloperHub\Domain\Service\Developer\DeveloperQueryResponse;
+use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
+use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
+use Jcv\DeveloperHub\Domain\Developer\UserName;
+use Jcv\DeveloperHub\Domain\Service\Developer\DeveloperFinder;
+use Jcv\DeveloperHub\Domain\Service\Developer\DeveloperQueryResponse;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 

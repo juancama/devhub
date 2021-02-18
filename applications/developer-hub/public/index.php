@@ -1,6 +1,6 @@
 <?php
 
-use Colvin\DeveloperHub\Infrastructure\Symfony\Kernel;
+use Jcv\DeveloperHub\Infrastructure\Symfony\Kernel;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;

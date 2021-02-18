@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Colvin\Tests\DeveloperHub\Domain\Service\Developer;
 
-use Colvin\DeveloperHub\Domain\Service\Developer\DeveloperQueryResponse;
+use Jcv\DeveloperHub\Domain\Service\Developer\DeveloperQueryResponse;
 use PHPUnit\Framework\TestCase;
 
 class DeveloperQueryResponseTest extends TestCase

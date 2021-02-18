@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\DeveloperHub\Ui\Web;
+namespace Jcv\DeveloperHub\Ui\Web;
 
-use Colvin\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
-use Colvin\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
+use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
+use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

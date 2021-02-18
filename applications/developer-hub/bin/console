@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Colvin\DeveloperHub\Infrastructure\Symfony\Kernel;
+use Jcv\DeveloperHub\Infrastructure\Symfony\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Dotenv\Dotenv;

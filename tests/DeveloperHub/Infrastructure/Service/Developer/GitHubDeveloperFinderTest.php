@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Colvin\Tests\DeveloperHub\Infrastructure\Service\Developer;
 
-use Colvin\DeveloperHub\Domain\Developer\UserName;
-use Colvin\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder;
+use Jcv\DeveloperHub\Domain\Developer\UserName;
+use Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder;
 use Colvin\Share\Bus\Query\QueryResponse;
 use PHPUnit\Framework\TestCase;
 

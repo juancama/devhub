@@ -14,36 +14,36 @@ services:
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
   # Controllers
-  Colvin\DeveloperHub\Ui\API\:
+  Jcv\DeveloperHub\Ui\API\:
     resource: '../../../src/DeveloperHub/Ui/API'
     tags: [ 'controller.service_arguments' ]
 
   # Controllers
-  Colvin\DeveloperHub\Ui\Web\:
+  Jcv\DeveloperHub\Ui\Web\:
     resource: '../../../src/DeveloperHub/Ui/Web'
     tags: [ 'controller.service_arguments' ]
 
   # Commands
-  Colvin\DeveloperHub\Ui\CLI\:
+  Jcv\DeveloperHub\Ui\CLI\:
     resource: '../../../src/DeveloperHub/Ui/CLI'
     tags: [ 'console.command' ]
 
   use_cases:
-    namespace: Colvin\DeveloperHub\Application\
+    namespace: Jcv\DeveloperHub\Application\
     resource: '../../../src/DeveloperHub/Application/**/*{UseCase.php}'
     tags: [ use_cases ]
     public: true
 
   domain_services:
-    namespace: Colvin\DeveloperHub\Domain\Service\
+    namespace: Jcv\DeveloperHub\Domain\Service\
     resource: '../../../src/DeveloperHub/Domain/Service/*'
     tags: [ domain_services ]
 
   # Developer finder
-  Colvin\DeveloperHub\Domain\Service\Developer\DeveloperFinder:
-    alias: Colvin\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder
+  Jcv\DeveloperHub\Domain\Service\Developer\DeveloperFinder:
+    alias: Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder
 
   # Github developer finder
-  Colvin\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder:
-    class: Colvin\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder
+  Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder:
+    class: Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder
     arguments: [ '%github_user%', '%github_token%' ]

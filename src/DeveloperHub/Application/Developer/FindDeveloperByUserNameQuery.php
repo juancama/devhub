@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\DeveloperHub\Application\Developer;
+namespace Jcv\DeveloperHub\Application\Developer;
 
 class FindDeveloperByUserNameQuery
 {

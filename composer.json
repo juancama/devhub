@@ -32,12 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Colvin\\": "src"
+            "Jcv\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Colvin\\Tests\\": "tests/"
+            "Jcv\\Tests\\": "tests/"
         }
     },
     "replace": {

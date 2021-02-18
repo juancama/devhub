@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\DeveloperHub\Infrastructure\Domain\Service\Developer;
+namespace Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer;
 
-use Colvin\DeveloperHub\Domain\Developer\UserName;
-use Colvin\DeveloperHub\Domain\Service\Developer\DeveloperFinder;
-use Colvin\DeveloperHub\Domain\Service\Developer\DeveloperQueryResponse;
+use Jcv\DeveloperHub\Domain\Developer\UserName;
+use Jcv\DeveloperHub\Domain\Service\Developer\DeveloperFinder;
+use Jcv\DeveloperHub\Domain\Service\Developer\DeveloperQueryResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\DeveloperHub\Application\Developer;
+namespace Jcv\DeveloperHub\Application\Developer;
 
-use Colvin\DeveloperHub\Domain\Developer\UserName;
-use Colvin\DeveloperHub\Domain\Service\Developer\DeveloperFinder;
-use Colvin\Share\Bus\Query\QueryResponse;
+use Jcv\DeveloperHub\Domain\Developer\UserName;
+use Jcv\DeveloperHub\Domain\Service\Developer\DeveloperFinder;
+use Jcv\Share\Bus\Query\QueryResponse;
 
 class FindDeveloperByUserNameUseCase
 {

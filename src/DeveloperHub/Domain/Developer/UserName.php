@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\DeveloperHub\Domain\Developer;
+namespace Jcv\DeveloperHub\Domain\Developer;
 
 final class UserName
 {
