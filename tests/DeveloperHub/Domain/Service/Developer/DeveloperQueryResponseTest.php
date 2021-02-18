@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\Test\DeveloperHub\Domain\Service\Developer;
+namespace Jcv\Tests\DeveloperHub\Domain\Service\Developer;
 
 use Jcv\DeveloperHub\Domain\Service\Developer\DeveloperQueryResponse;
 use PHPUnit\Framework\TestCase;

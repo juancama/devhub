@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\Test\DeveloperHub\Application\Developer;
+namespace Jcv\Tests\DeveloperHub\Application\Developer;
 
 use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
 use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
