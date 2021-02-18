@@ -41,11 +41,18 @@
                     <button class="btn btn-outline-primary" type="submit">Go !</button>
                 </div>
 
+                <br>
                 {% if developer %}
-                    <br>
                     <div class="card">
                         <div class="card-body">
                             <pre>{{ developer |json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                        </div>
+                    </div>
+                {% elseif userName %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Ups !</h4>
+                            Developer "{{ userName }}" not found.
                         </div>
                     </div>
                 {% endif %}

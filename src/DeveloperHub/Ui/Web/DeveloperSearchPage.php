@@ -22,13 +22,25 @@ class DeveloperSearchPage extends AbstractController
     {
         $userName = $request->get('userName');
 
+        //todo: handle query errors and prepare to print as html error message
         return $this->render('@forms/searchDeveloper.html.twig', [
             'userName' => $userName,
-            'developer' => $userName ? $this->useCase->__invoke(
-                new FindDeveloperByUserNameQuery(
-                    $userName
-                )
-            ) : null,
+            'developer' => $this->getDeveloper($userName),
         ]);
+    }
+
+    private function getDeveloper(?string $userName): ?array
+    {
+        if (!$userName) {
+            return null;
+        }
+
+        $developer = $this->useCase->__invoke(
+            new FindDeveloperByUserNameQuery(
+                $userName
+            )
+        );
+
+        return $developer ? $developer->payload() : null;
     }
 }
