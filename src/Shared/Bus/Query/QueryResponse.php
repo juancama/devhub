@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Jcv\Share\Bus\Query;
+namespace Jcv\Shared\Bus\Query;
 
 interface QueryResponse
 {

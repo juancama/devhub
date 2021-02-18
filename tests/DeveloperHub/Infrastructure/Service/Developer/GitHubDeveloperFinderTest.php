@@ -5,7 +5,7 @@ namespace Jcv\Tests\DeveloperHub\Infrastructure\Service\Developer;
 
 use Jcv\DeveloperHub\Domain\Developer\UserName;
 use Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder;
-use Jcv\Share\Bus\Query\QueryResponse;
+use Jcv\Shared\Bus\Query\QueryResponse;
 use PHPUnit\Framework\TestCase;
 
 class GitHubDeveloperFinderTest extends TestCase

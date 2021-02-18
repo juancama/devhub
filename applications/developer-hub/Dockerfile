@@ -47,6 +47,7 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 # Production source code
 RUN mkdir -vp ${APP_ROOT_PATH}/src
 COPY src/DeveloperHub ${APP_ROOT_PATH}/src/DeveloperHub
+COPY src/Shared ${APP_ROOT_PATH}/src/Shared
 COPY applications/developer-hub/config ${APP_PATH}/config
 COPY applications/developer-hub/public ${APP_PATH}/public
 COPY applications/developer-hub/bin ${APP_PATH}/bin

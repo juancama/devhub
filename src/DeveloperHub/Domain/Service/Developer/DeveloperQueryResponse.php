@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Jcv\DeveloperHub\Domain\Service\Developer;
 
-use Jcv\Share\Bus\Query\QueryResponse;
+use Jcv\Shared\Bus\Query\QueryResponse;
 
 final class DeveloperQueryResponse implements QueryResponse
 {
