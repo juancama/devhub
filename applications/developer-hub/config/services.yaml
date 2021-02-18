@@ -14,11 +14,6 @@ services:
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
   # Controllers
-  Jcv\DeveloperHub\Ui\API\:
-    resource: '../../../src/DeveloperHub/Ui/API'
-    tags: [ 'controller.service_arguments' ]
-
-  # Controllers
   Jcv\DeveloperHub\Ui\Web\:
     resource: '../../../src/DeveloperHub/Ui/Web'
     tags: [ 'controller.service_arguments' ]
