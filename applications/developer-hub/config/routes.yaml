@@ -2,7 +2,3 @@ searchpage:
     path: /
     controller: Jcv\DeveloperHub\Ui\Web\DeveloperSearchPage::form
     methods: GET|POST
-
-api.developer.show:
-    path: /api/v1/developers
-    controller: Jcv\DeveloperHub\Ui\API\Developer\FindDeveloperByUserName
