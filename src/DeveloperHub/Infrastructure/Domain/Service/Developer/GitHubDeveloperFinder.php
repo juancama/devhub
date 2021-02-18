@@ -17,17 +17,17 @@ class GitHubDeveloperFinder implements DeveloperFinder
 {
     private Client $client;
 
-    public function __construct(string $user, string $pass, ?HandlerStack $stack = null)
+    public function __construct(string $user, string $token, ?HandlerStack $stack = null)
     {
         $stack = $stack ?? HandlerStack::create();
 
         $stack->push(Middleware::mapRequest(fn(RequestInterface $request) => $request->withHeader(
             'Authorization',
-            'Basic ' . base64_encode("{$user}:{$pass}")
+            'Basic ' . base64_encode("{$user}:{$token}")
         )));
 
         $this->client = new Client([
-            'stack' => $stack,
+            'handler' => $stack,
             'base_uri' => 'https://api.github.com',
         ]);
     }
@@ -58,7 +58,7 @@ class GitHubDeveloperFinder implements DeveloperFinder
                     json_decode(
                         $this->client->get($user['followers_url'])->getBody()->getContents(),
                         true
-                    )
+                    ) ?? []
                 ),
             ], $response['items'] ?? []);
 
