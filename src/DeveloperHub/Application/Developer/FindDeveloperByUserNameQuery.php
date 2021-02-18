@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Jcv\DeveloperHub\Application\Developer;
 
-class FindDeveloperByUserNameQuery
+use Jcv\Shared\Bus\Query\Query;
+
+class FindDeveloperByUserNameQuery implements Query
 {
     private string $userName;
 

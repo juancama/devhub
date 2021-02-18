@@ -42,3 +42,12 @@ services:
   Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder:
     class: Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder
     arguments: [ '%github_user%', '%github_token%' ]
+
+  ## Query bus
+  Jcv\Shared\Bus\Query\QueryBus:
+    alias: Jcv\Shared\Infrastructure\Bus\TacticianQueryBus
+
+  Jcv\Shared\Infrastructure\Bus\TacticianQueryBus:
+    class: Jcv\Shared\Infrastructure\Bus\TacticianQueryBus
+    factory: ['Jcv\Shared\Infrastructure\Symfony\DependencyInjection\Bus\QueryBusFactory', 'make']
+    arguments: ['@service_container']
