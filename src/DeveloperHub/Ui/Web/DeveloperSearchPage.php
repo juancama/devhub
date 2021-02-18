@@ -5,17 +5,18 @@ namespace Jcv\DeveloperHub\Ui\Web;
 
 use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
 use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
+use Jcv\Shared\Bus\Query\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DeveloperSearchPage extends AbstractController
 {
-    private FindDeveloperByUserNameUseCase $useCase;
+    private QueryBus $queryBus;
 
-    public function __construct(FindDeveloperByUserNameUseCase $useCase)
+    public function __construct(queryBus $useCase)
     {
-        $this->useCase = $useCase;
+        $this->queryBus = $useCase;
     }
 
     public function form(Request $request): Response
@@ -35,7 +36,7 @@ class DeveloperSearchPage extends AbstractController
             return null;
         }
 
-        $developer = $this->useCase->__invoke(
+        $developer = $this->queryBus->ask(
             new FindDeveloperByUserNameQuery(
                 $userName
             )

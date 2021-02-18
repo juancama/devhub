@@ -5,6 +5,7 @@ namespace Jcv\DeveloperHub\Ui\CLI\Developer;
 
 use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
 use Jcv\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
+use Jcv\Shared\Bus\Query\QueryBus;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,11 +15,11 @@ class FindDeveloperByUserName extends Command
 {
     protected static $defaultName = 'colvin:search-developer';
 
-    private FindDeveloperByUserNameUseCase $useCase;
+    private QueryBus $useCase;
 
-    public function __construct(FindDeveloperByUserNameUseCase $useCase)
+    public function __construct(QueryBus $queryBus)
     {
-        $this->useCase = $useCase;
+        $this->useCase = $queryBus;
 
         parent::__construct();
     }
@@ -41,7 +42,7 @@ class FindDeveloperByUserName extends Command
         $output->writeln(["> Searching: {$username}"]);
 
         //todo: handle query exceptions and print error message
-        $developer = $this->useCase->__invoke(
+        $developer = $this->useCase->ask(
             new FindDeveloperByUserNameQuery($username)
         );
 
