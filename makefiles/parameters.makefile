@@ -1,5 +1,5 @@
 APP_BASE_URL=http://localhost
-DOCKER_COMPOSER_PN = colvin-jcv
+DOCKER_COMPOSER_PN = devhub
 DEVELOPER_HUB_CONTAINER = $(DOCKER_COMPOSER_PN)_developer-hub_1
 PHPUNIT_CONTAINER  = $(DOCKER_COMPOSER_PN)_developer-hub_phpunit_1
 

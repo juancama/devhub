@@ -24,7 +24,7 @@ serve:
 
 ## Runs unit tests. needs 'make serve'
 unit-tests:
-	docker exec -i colvin-jcv_phpunit_1 ./vendor/bin/phpunit --colors=always --exclude-group integration $(extra)
+	docker exec -i devhub_phpunit_1 ./vendor/bin/phpunit --colors=always --exclude-group integration $(extra)
 .PHONY: unit-tests
 
 search-developer:
@@ -32,5 +32,5 @@ search-developer:
 .PHONY: search-developer
 
 cli:
-	docker exec -i --workdir=/var/www/html/colvin-jcv $(DEVELOPER_HUB_CONTAINER) ./applications/developer-hub/bin/console $(cmd)
+	docker exec -i --workdir=/var/www/html/devhub $(DEVELOPER_HUB_CONTAINER) ./applications/developer-hub/bin/console $(cmd)
 .PHONY: cli

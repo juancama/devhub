@@ -3,7 +3,7 @@ FROM php:7.4-apache as base-web
 RUN docker-php-ext-install pdo_mysql
 
 # Use the new document root
-ENV APP_ROOT_PATH /var/www/html/colvin-jcv
+ENV APP_ROOT_PATH /var/www/html/devhub
 ENV APP_PATH ${APP_ROOT_PATH}/applications/developer-hub
 ENV APACHE_DOCUMENT_ROOT ${APP_PATH}/public
 

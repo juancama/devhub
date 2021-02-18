@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: ./applications/developer-hub/Dockerfile
     volumes:
-      - ./:/var/www/html/colvin-jcv
+      - ./:/var/www/html/devhub
     ports:
       - "${DEVELOPER_HUB_WEB_PORT}:80"
     depends_on:
