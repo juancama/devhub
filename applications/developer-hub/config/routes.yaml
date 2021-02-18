@@ -1,0 +1,8 @@
+searchpage:
+    path: /
+    controller: Colvin\DeveloperHub\Ui\Web\DeveloperSearchPage::form
+    methods: GET|POST
+
+api.developer.show:
+    path: /api/v1/developers
+    controller: Colvin\DeveloperHub\Ui\API\Developer\FindDeveloperByUserName

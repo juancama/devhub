@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+  github_user: '%env(GITHUB_USER)%'
+  github_token: '%env(GITHUB_TOKEN)%'
 
 services:
   # default configuration for services in *this* file
@@ -15,3 +17,33 @@ services:
   Colvin\DeveloperHub\Ui\API\:
     resource: '../../../src/DeveloperHub/Ui/API'
     tags: [ 'controller.service_arguments' ]
+
+  # Controllers
+  Colvin\DeveloperHub\Ui\Web\:
+    resource: '../../../src/DeveloperHub/Ui/Web'
+    tags: [ 'controller.service_arguments' ]
+
+  # Commands
+  Colvin\DeveloperHub\Ui\CLI\:
+    resource: '../../../src/DeveloperHub/Ui/CLI'
+    tags: [ 'console.command' ]
+
+  use_cases:
+    namespace: Colvin\DeveloperHub\Application\
+    resource: '../../../src/DeveloperHub/Application/**/*{UseCase.php}'
+    tags: [ use_cases ]
+    public: true
+
+  domain_services:
+    namespace: Colvin\DeveloperHub\Domain\Service\
+    resource: '../../../src/DeveloperHub/Domain/Service/*'
+    tags: [ domain_services ]
+
+  # Developer finder
+  Colvin\DeveloperHub\Domain\Service\Developer\DeveloperFinder:
+    alias: Colvin\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder
+
+  # Github developer finder
+  Colvin\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder:
+    class: Colvin\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder
+    arguments: [ '%github_user%', '%github_token%' ]
