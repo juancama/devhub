@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DeveloperHub\Application\Developer;
+namespace Colvin\Tests\DeveloperHub\Application\Developer;
 
 use Colvin\DeveloperHub\Application\Developer\FindDeveloperByUserNameQuery;
 use Colvin\DeveloperHub\Application\Developer\FindDeveloperByUserNameUseCase;
