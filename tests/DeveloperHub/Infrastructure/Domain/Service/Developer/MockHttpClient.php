@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Jcv\Tests\DeveloperHub\Infrastructure\Service\Developer;
+namespace Jcv\Tests\DeveloperHub\Infrastructure\Domain\Service\Developer;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
