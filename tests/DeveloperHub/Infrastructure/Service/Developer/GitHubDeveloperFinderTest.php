@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Colvin\Tests\DeveloperHub\Infrastructure\Service\Developer;
+namespace Jcv\Tests\DeveloperHub\Infrastructure\Service\Developer;
 
 use Jcv\DeveloperHub\Domain\Developer\UserName;
 use Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder;
-use Colvin\Share\Bus\Query\QueryResponse;
+use Jcv\Share\Bus\Query\QueryResponse;
 use PHPUnit\Framework\TestCase;
 
 class GitHubDeveloperFinderTest extends TestCase
