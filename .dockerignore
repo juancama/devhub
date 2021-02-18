@@ -1,0 +1,8 @@
+Dockerfile
+vendor
+var
+.gitignore
+docker-compose.yml
+Makefile
+makefiles
+
