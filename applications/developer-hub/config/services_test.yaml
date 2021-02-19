@@ -1,0 +1,30 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+  github_user: myUser
+  github_token: myToken
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  GuzzleHttp\Handler\MockHandler:
+    class: GuzzleHttp\Handler\MockHandler
+    shared: true
+
+  GuzzleHttp\HandlerStack:
+    class: GuzzleHttp\HandlerStack
+    shared: true
+    arguments:
+      $handler: '@GuzzleHttp\Handler\MockHandler'
+
+  # Github developer finder
+  Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder:
+    public: true
+    class: Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder
+    arguments: [ '%github_user%', '%github_token%' , '@GuzzleHttp\HandlerStack']
