@@ -4,6 +4,10 @@
 .DEFAULT_GOAL := help
 
 help:
+	@echo "$(GREEN)serve$(END) Up application"
+	@echo "$(GREEN)tests$(END) Run all tests"
+	@echo "$(GREEN)unit-tests$(END) Run unit tests"
+	@echo "$(GREEN)integration-tests$(END) Run integration tests"
 	@echo "$(GREEN)composer$(END) Execute composer command. Example: $(BLUE)make composer cmd=\"require ramsey/uuid\"$(END)"
 .PHONY: help
 
@@ -22,10 +26,20 @@ serve:
 	@echo "$(YELLOW)developer-hub: $(END) '$(BLUE)$(APP_BASE_URL):$(DEVELOPER_HUB_WEB_PORT)$(END)'";
 .PHONY: serve
 
-## Runs unit tests. needs 'make serve'
 unit-tests:
 	docker exec -i devhub_phpunit_1 ./vendor/bin/phpunit --colors=always --exclude-group integration $(extra)
 .PHONY: unit-tests
+
+integration-tests:
+	docker exec -i --workdir=/var/www/html/devhub $(DEVELOPER_HUB_CONTAINER) ./vendor/bin/phpunit \
+	--configuration /var/www/html/devhub/applications/developer-hub/phpunit.xml \
+	--colors=always --group integration --exclude-group external $(extra)
+.PHONY: integration-tests
+
+tests:
+	- $(MAKE) unit-tests --no-print-directory
+	- $(MAKE) integration-tests --no-print-directory
+.PHONY: tests
 
 search-developer:
 	$(MAKE) cli cmd="colvin:search-developer $(username)"
