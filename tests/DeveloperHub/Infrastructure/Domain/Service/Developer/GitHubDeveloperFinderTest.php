@@ -6,6 +6,7 @@ namespace Jcv\Tests\DeveloperHub\Infrastructure\Domain\Service\Developer;
 use Jcv\DeveloperHub\Domain\Developer\UserName;
 use Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder;
 use Jcv\Shared\Bus\Query\QueryResponse;
+use Jcv\Tests\DeveloperHub\MockHttpClient;
 use PHPUnit\Framework\TestCase;
 
 class GitHubDeveloperFinderTest extends TestCase
@@ -15,16 +16,25 @@ class GitHubDeveloperFinderTest extends TestCase
     protected string $githubUser = 'myGitHubUser';
     protected string $gitHubToken = '1234567890';
     protected ?UserName $searchUserName;
-    private ?array $followersResponsePayload;
-    private ?array $developerResponsePayload;
+    private ?array $followersResponsePayloadMock;
+    private ?array $developerResponsePayloadMock;
+    private ?GitHubDeveloperFinder $client;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->setupMockHttpClient();
+
+        $this->client = new GitHubDeveloperFinder(
+            $this->githubUser,
+            $this->gitHubToken,
+            $this->mockHttpClientStack
+        );
+
         $this->searchUserName = UserName::fromString('colvin');
 
-        $this->developerResponsePayload = [
+        $this->developerResponsePayloadMock = [
             'items' => [
                 [
                     'login' => $this->searchUserName->userName(),
@@ -33,7 +43,7 @@ class GitHubDeveloperFinderTest extends TestCase
             ],
         ];
 
-        $this->followersResponsePayload = [
+        $this->followersResponsePayloadMock = [
             ['login' => 'jhon'],
             ['login' => 'mike'],
             ['login' => 'anne'],
@@ -44,15 +54,15 @@ class GitHubDeveloperFinderTest extends TestCase
     {
         parent::tearDown();
 
-        $this->httpClientTeardown();
+        $this->teardownMockHttpClient();
     }
 
     /** @test */
     public function should_send_basic_auth_credentials()
     {
-        $this->queueResponses = [
-            $this->makeJsonResponse(),
-        ];
+        $this->setHttpClientMockQueue([
+            $this::okResponse(),
+        ]);
 
         $this->searchDeveloper();
 
@@ -66,15 +76,15 @@ class GitHubDeveloperFinderTest extends TestCase
     /** @test */
     public function should_get_one_developer_by_userName_without_followBacks()
     {
-        $this->queueResponses = [
-            $this->makeJsonResponse($this->developerResponsePayload),
-            $this->makeJsonResponse(),
-        ];
+        $this->setHttpClientMockQueue([
+            $this::makeJsonResponse($this->developerResponsePayloadMock),
+            $this::okResponse(),
+        ]);
 
         $user = $this->searchDeveloper();
 
         $expectedPayload = [
-            'userName' => $this->developerResponsePayload['items'][0]['login'],
+            'userName' => $this->developerResponsePayloadMock['items'][0]['login'],
             'followBacks' =>
                 [
                     'count' => 0,
@@ -88,19 +98,19 @@ class GitHubDeveloperFinderTest extends TestCase
     /** @test */
     public function should_get_one_developer_by_userName()
     {
-        $this->queueResponses = [
-            $this->makeJsonResponse($this->developerResponsePayload),
-            $this->makeJsonResponse($this->followersResponsePayload),
-        ];
+        $this->setHttpClientMockQueue([
+            $this::makeJsonResponse($this->developerResponsePayloadMock),
+            $this::makeJsonResponse($this->followersResponsePayloadMock),
+        ]);
 
         $user = $this->searchDeveloper();
 
         $expectedPayload = [
-            'userName' => $this->developerResponsePayload['items'][0]['login'],
+            'userName' => $this->developerResponsePayloadMock['items'][0]['login'],
             'followBacks' =>
                 [
-                    'count' => count($this->followersResponsePayload),
-                    'userNames' => array_map(fn($follower) => $follower['login'], $this->followersResponsePayload),
+                    'count' => count($this->followersResponsePayloadMock),
+                    'userNames' => array_map(fn($follower) => $follower['login'], $this->followersResponsePayloadMock),
                 ],
         ];
 
@@ -111,12 +121,6 @@ class GitHubDeveloperFinderTest extends TestCase
 
     protected function searchDeveloper(): ?QueryResponse
     {
-        $client = $this->mockClient(fn($stack) => new GitHubDeveloperFinder(
-            $this->githubUser,
-            $this->gitHubToken,
-            $stack
-        ));
-
-        return $client->findByUserName($this->searchUserName);
+        return $this->client->findByUserName($this->searchUserName);
     }
 }

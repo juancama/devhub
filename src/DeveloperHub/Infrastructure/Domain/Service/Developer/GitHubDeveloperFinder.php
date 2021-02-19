@@ -21,7 +21,7 @@ class GitHubDeveloperFinder implements DeveloperFinder
     {
         $stack = $stack ?? HandlerStack::create();
 
-        $stack->push(Middleware::mapRequest(fn(RequestInterface $request) => $request->withHeader(
+        $stack->unshift(Middleware::mapRequest(fn(RequestInterface $request) => $request->withHeader(
             'Authorization',
             'Basic ' . base64_encode("{$user}:{$token}")
         )));
