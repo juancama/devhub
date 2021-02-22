@@ -59,7 +59,7 @@ make serve
 
 - Web search:
 
-go to http: // localhost: 3200
+go to http://localhost:3200
 
 
 - CLI search:
