@@ -4,12 +4,22 @@
 .DEFAULT_GOAL := help
 
 help:
+	@echo "$(GREEN)setup$(END) First time application setup"
 	@echo "$(GREEN)serve$(END) Up application"
 	@echo "$(GREEN)tests$(END) Run all tests"
 	@echo "$(GREEN)unit-tests$(END) Run unit tests"
 	@echo "$(GREEN)integration-tests$(END) Run integration tests"
 	@echo "$(GREEN)composer$(END) Execute composer command. Example: $(BLUE)make composer cmd=\"require ramsey/uuid\"$(END)"
 .PHONY: help
+
+setup:
+	-cp -n .env.dist .env
+	-cp -n phpunit.xml.dist phpunit.xml
+	-cp -n ./applications/developer-hub/.env.dist ./applications/developer-hub/.env
+	-cp -n ./applications/developer-hub/phpunit.xml.dist ./applications/developer-hub/phpunit.xml
+	-mkdir -pv ./applications/developer-hub/var/cache \
+	&& chmod -R ugo+w ./applications/developer-hub/var
+.PHONY: setup
 
 composer:
 	docker run --rm --interactive --volume $(PWD):/app --workdir=/app composer $(cmd) --ignore-platform-reqs
