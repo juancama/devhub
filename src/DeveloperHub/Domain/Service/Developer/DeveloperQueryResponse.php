@@ -9,11 +9,13 @@ final class DeveloperQueryResponse implements QueryResponse
 {
     private string $userName;
     private array $followersUserNames;
+    private int $totalFollowers;
 
-    public function __construct(string $userName, array $followersUserNames)
+    public function __construct(string $userName, array $followersUserNames, int $totalFollowers)
     {
         $this->userName = $userName;
         $this->followersUserNames = $followersUserNames;
+        $this->totalFollowers = $totalFollowers;
     }
 
     public static function fromArray(array $data)
@@ -21,6 +23,7 @@ final class DeveloperQueryResponse implements QueryResponse
         return new static(
             $data['userName'] ?? null,
             $data['followersUserNames'] ?? [],
+            $data['totalFollowers'] ?? 0,
         );
     }
 
@@ -29,7 +32,7 @@ final class DeveloperQueryResponse implements QueryResponse
         return [
             'userName' => $this->userName,
             'followBacks' => [
-                'count' => count($this->followersUserNames),
+                'count' => $this->totalFollowers,
                 'userNames' => $this->followersUserNames,
             ],
         ];

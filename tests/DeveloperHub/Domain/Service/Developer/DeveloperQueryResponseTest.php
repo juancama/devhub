@@ -13,7 +13,7 @@ class DeveloperQueryResponseTest extends TestCase
     {
         $userName = 'colvin';
 
-        $developer = new DeveloperQueryResponse($userName, []);
+        $developer = new DeveloperQueryResponse($userName, [], 0);
 
         $this->assertEquals($userName, $developer->payload()['userName']);
     }
@@ -23,11 +23,11 @@ class DeveloperQueryResponseTest extends TestCase
     {
         $followersUserNames = ['jhon', 'mike', 'chloe', 'anne'];
 
-        $developer = new DeveloperQueryResponse('colvin', $followersUserNames);
+        $totalFollowers = count($followersUserNames);
 
-        $expectedCount = count($followersUserNames);
+        $developer = new DeveloperQueryResponse('colvin', $followersUserNames, $totalFollowers);
 
-        $this->assertEquals($expectedCount, $developer->payload()['followBacks']['count']);
+        $this->assertEquals($totalFollowers, $developer->payload()['followBacks']['count']);
     }
 
     /** @test */
@@ -35,7 +35,7 @@ class DeveloperQueryResponseTest extends TestCase
     {
         $followersUserNames = ['jhon', 'mike', 'chloe', 'anne'];
 
-        $developer = new DeveloperQueryResponse('colvin', $followersUserNames);
+        $developer = new DeveloperQueryResponse('colvin', $followersUserNames, count($followersUserNames));
 
         $this->assertEquals($followersUserNames, $developer->payload()['followBacks']['userNames']);
     }
