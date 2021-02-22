@@ -69,6 +69,8 @@ class GitHubDeveloperFinderTest extends TestCase
         $this->assertEquals("/users/{$this->searchUserName}/followers", $request->getUri()->getPath());
     }
 
+    //todo: tests wrong scenarios
+
     protected function searchDeveloper(): ?QueryResponse
     {
         return $this->client->findByUserName(
