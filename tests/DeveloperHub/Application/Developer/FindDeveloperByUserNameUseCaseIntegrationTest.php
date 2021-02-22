@@ -64,7 +64,7 @@ class FindDeveloperByUserNameUseCaseIntegrationTest extends IntegrationTestCase
         $developer = $this->searchDeveloperByUserName();
 
         $expectedResponse = DeveloperQueryResponse::fromArray(
-            $this->developerWithFollowersResponsePayload()
+            $this->developerWithoutFollowersResponsePayload()
         );
 
         $this->assertEquals($expectedResponse, $developer);
