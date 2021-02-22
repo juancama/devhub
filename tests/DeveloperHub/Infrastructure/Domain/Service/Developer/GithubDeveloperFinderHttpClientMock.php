@@ -7,7 +7,7 @@ use Jcv\DeveloperHub\Domain\Developer\UserName;
 use Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder;
 use Jcv\Tests\DeveloperHub\MockHttpClient;
 
-trait GithubDeveloperFinderMock
+trait GithubDeveloperFinderHttpClientMock
 {
     use MockHttpClient;
 

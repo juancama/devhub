@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class GitHubDeveloperFinderTest extends TestCase
 {
-    use GithubDeveloperFinderMock;
+    use GithubDeveloperFinderHttpClientMock;
 
     protected function setUp(): void
     {
@@ -37,6 +37,8 @@ class GitHubDeveloperFinderTest extends TestCase
 
         $this->assertEquals($this->basicAuth(), $sentAuth);
     }
+
+    //todo: test api call url and arguments
 
     /** @test */
     public function should_get_one_developer_by_userName_without_followBacks()
