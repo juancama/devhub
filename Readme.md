@@ -37,7 +37,7 @@ Port is not available? you can change.
 ```
 # .env
 
-DEVELOPER_HUB_WEB_PORT = <yourPort>
+DEVELOPER_HUB_WEB_PORT=<yourPort>
 ```
 
 3. Setup your personal token (https://github.com/settings/tokens)
@@ -45,8 +45,8 @@ DEVELOPER_HUB_WEB_PORT = <yourPort>
 ```
 # ./applications/developer-hub/.env
 
-GITHUB_USER = <username>
-GITHUB_TOKEN = <token
+GITHUB_USER=<username>
+GITHUB_TOKEN=<token
 ```
 
 4. Run app!
