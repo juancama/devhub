@@ -46,11 +46,13 @@ class GitHubDeveloperFinder implements DeveloperFinder
 
             $result = [
                 'userName' => $user['login'],
-                'totalFollowers' => $user['followers'],
-                'followersUserNames' => array_map(
-                    fn(array $follower) => $follower['login'],
-                    $this->getFollowers($user['login'], $followersPage),
-                ),
+                'followBacks' => [
+                    'count' => $user['followers'],
+                    'userNames' => array_map(
+                        fn(array $follower) => $follower['login'],
+                        $this->getFollowers($user['login'], $followersPage),
+                    ),
+                ],
             ];
         } catch (GuzzleException | ServerException $e) {
             //Important: this approach mute all errors. All non "200" responses will be handled as "404" (not found).
