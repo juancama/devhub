@@ -65,5 +65,5 @@ go to http://localhost:3200
 - CLI search:
 
 ```
-make search-developer username = "juancama"
+make search-developer username="juancama"
 ```
