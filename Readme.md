@@ -67,3 +67,17 @@ go to http://localhost:3200
 ```
 make search-developer username="juancama"
 ```
+
+
+### Show Other Recipes
+
+```
+$ make help
+
+setup First time application setup
+serve Up application
+tests Run all tests
+unit-tests Run unit tests
+integration-tests Run integration tests
+composer Execute composer command. Example: make composer cmd="require ramsey/uuid"
+```
