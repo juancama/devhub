@@ -34,40 +34,49 @@ class GitHubDeveloperFinder implements DeveloperFinder
 
     public function findByUserName(UserName $userName): ?DeveloperQueryResponse
     {
-        $developerData = $this->getUser($userName);
+        $developerData = $this->getUserWithFollowers($userName->userName());
 
         return $developerData ? DeveloperQueryResponse::fromArray($developerData) : null;
     }
 
-    protected function getUser(UserName $userName): ?array
+    protected function getUserWithFollowers(string $userName, int $followersPage = 1): ?array
     {
         try {
-            $response = $this->client->get('/search/users', [
-                'query' => [
-                    'q' => $userName->userName(),
-                    'per_page' => 1,
-                ],
-            ]);
+            $user = $this->findUser($userName);
 
-            $response = json_decode($response->getBody()->getContents(), true);
-
-            $result = array_map(fn(array $user) => [
+            $result = [
                 'userName' => $user['login'],
+                'totalFollowers' => $user['followers'],
                 'followersUserNames' => array_map(
                     fn(array $follower) => $follower['login'],
-                    json_decode(
-                        $this->client->get($user['followers_url'])->getBody()->getContents(),
-                        true
-                    ) ?? []
+                    $this->getFollowers($user['login'], $followersPage),
                 ),
-            ], $response['items'] ?? []);
-
-            return $result ? array_shift($result) : null;
+            ];
         } catch (GuzzleException | ServerException $e) {
             //Important: this approach mute all errors. All non "200" responses will be handled as "404" (not found).
 
             //todo: handle errors and throw exception.
             // handle "404" (not found) as well other server errors (500, 401, ...) and throw "Query Exception"
         }
+
+        return $result ?? null;
+    }
+
+    private function getFollowers(string $userName, int $followersPage): array
+    {
+        $response = $this->client->get("/users/{$userName}/followers", [
+            'query' => [
+                'page' => $followersPage,
+            ],
+        ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    private function findUser(string $userName): array
+    {
+        $response = $this->client->get("https://api.github.com/users/{$userName}");
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

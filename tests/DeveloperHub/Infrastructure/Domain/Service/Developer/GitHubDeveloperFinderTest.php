@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Jcv\Tests\DeveloperHub\Infrastructure\Domain\Service\Developer;
 
+use Jcv\DeveloperHub\Domain\Developer\UserName;
+use Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder;
 use Jcv\Shared\Bus\Query\QueryResponse;
 use PHPUnit\Framework\TestCase;
 
@@ -10,11 +12,19 @@ class GitHubDeveloperFinderTest extends TestCase
 {
     use GithubDeveloperFinderHttpClientMock;
 
+    private ?GitHubDeveloperFinder $client;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->setupGitHubDeveloperFinderMock();
+
+        $this->client = new GitHubDeveloperFinder(
+            $this->githubUser,
+            $this->gitHubToken,
+            $this->mockHttpClientStack
+        );
     }
 
     protected function tearDown(): void
@@ -25,55 +35,44 @@ class GitHubDeveloperFinderTest extends TestCase
     }
 
     /** @test */
-    public function should_send_basic_auth_credentials()
+    public function should_send_basic_auth_credentials_in_all_requests()
     {
-        $this->developerWillBeFound();
-
-        $this->developerFollowersWillBeFound();
+        $this->developerWillBeFoundWhitFollowers();
 
         $this->searchDeveloper();
 
-        $sentAuth = $this->getLastRequest()->getHeaderLine('Authorization');
-
-        $this->assertEquals($this->basicAuth(), $sentAuth);
-    }
-
-    //todo: test api call url and arguments
-
-    /** @test */
-    public function should_get_one_developer_by_userName_without_followBacks()
-    {
-        $this->developerWillBeFound();
-
-        $this->developerFollowersWillBeEmpty();
-
-        $developer = $this->searchDeveloper();
-
-        $this->assertEquals(
-            $this->developerWithoutFollowersResponsePayload(),
-            $developer->payload()
-        );
+        $this->assertEquals($this->basicAuth(), $this->getRequest(0)->getHeaderLine('Authorization'));
+        $this->assertEquals($this->basicAuth(), $this->getRequest(1)->getHeaderLine('Authorization'));
     }
 
     /** @test */
-    public function should_get_one_developer_by_userName()
+    public function should_find_developer_using_users_api_call()
     {
-        $this->developerWillBeFound();
+        $this->developerWillBeFoundWhitFollowers();
 
-        $this->developerFollowersWillBeFound();
+        $this->searchDeveloper();
 
-        $developer = $this->searchDeveloper();
+        $request = $this->getFirstRequest();
 
-        $this->assertEquals(
-            $this->developerWithFollowersResponsePayload(),
-            $developer->payload()
-        );
+        $this->assertEquals("/users/{$this->searchUserName}", $request->getUri()->getPath());
     }
 
-    //todo: tests wrong scenarios
+    /** @test */
+    public function should_get_followers_using_user_followers_api_call()
+    {
+        $this->developerWillBeFoundWhitFollowers();
+
+        $this->searchDeveloper();
+
+        $request = $this->getLastRequest();
+
+        $this->assertEquals("/users/{$this->searchUserName}/followers", $request->getUri()->getPath());
+    }
 
     protected function searchDeveloper(): ?QueryResponse
     {
-        return $this->client->findByUserName($this->searchUserName);
+        return $this->client->findByUserName(
+            UserName::fromString($this->searchUserName)
+        );
     }
 }

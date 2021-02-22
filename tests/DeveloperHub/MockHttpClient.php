@@ -37,20 +37,25 @@ trait MockHttpClient
         return count(static::$mockHttpClientHistory);
     }
 
-    protected function setHttpClientMockQueue(array $value)
+    protected function setHttpClientMockQueue(... $value)
     {
         $this->mockHttpClientHandler->reset();
-        $this->mockHttpClientHandler->append(...$value);
-    }
-
-    protected function httpClientMockQueueAppend(...$value)
-    {
         $this->mockHttpClientHandler->append(...$value);
     }
 
     protected function getLastRequest(): RequestInterface
     {
         return $this->mockHttpClientHandler->getLastRequest();
+    }
+
+    protected function getFirstRequest(): RequestInterface
+    {
+        return $this->getRequest(0);
+    }
+
+    protected function getRequest(int $queueIndex)
+    {
+        return static::$mockHttpClientHistory[$queueIndex]['request'];
     }
 
     protected static function makeJsonResponse(array $payload = [], int $code = 200, array $headers = []): Response

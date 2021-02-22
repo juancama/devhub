@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Jcv\Tests\DeveloperHub\Infrastructure\Domain\Service\Developer;
 
-use Jcv\DeveloperHub\Domain\Developer\UserName;
-use Jcv\DeveloperHub\Infrastructure\Domain\Service\Developer\GitHubDeveloperFinder;
 use Jcv\Tests\DeveloperHub\MockHttpClient;
 
 trait GithubDeveloperFinderHttpClientMock
@@ -15,23 +13,13 @@ trait GithubDeveloperFinderHttpClientMock
     protected string $gitHubToken = '1234567890';
     private ?array $followersResponsePayloadMock;
     private ?array $developerResponsePayloadMock;
-    protected ?UserName $searchUserName;
-    private ?GitHubDeveloperFinder $client;
+    protected ?string $searchUserName;
 
     protected function setupGitHubDeveloperFinderMock()
     {
         $this->setupMockHttpClient();
 
-        $this->searchUserName = UserName::fromString('colvin');
-
-        $this->developerResponsePayloadMock = [
-            'items' => [
-                [
-                    'login' => $this->searchUserName->userName(),
-                    'followers_url' => "https://api.github.com/users/{$this->searchUserName->userName()}/followers",
-                ],
-            ],
-        ];
+        $this->searchUserName = 'githubteacher';
 
         $this->followersResponsePayloadMock = [
             ['login' => 'jhon'],
@@ -39,11 +27,11 @@ trait GithubDeveloperFinderHttpClientMock
             ['login' => 'anne'],
         ];
 
-        $this->client = new GitHubDeveloperFinder(
-            $this->githubUser,
-            $this->gitHubToken,
-            $this->mockHttpClientStack
-        );
+        $this->developerResponsePayloadMock = [
+            'login' => $this->searchUserName,
+            'followers' => count($this->followersResponsePayloadMock),
+            'followers_url' => "https://api.github.com/users/{$this->searchUserName}/followers",
+        ];
     }
 
     protected function basicAuth(): string
@@ -54,44 +42,42 @@ trait GithubDeveloperFinderHttpClientMock
     protected function developerWithoutFollowersResponsePayload(): array
     {
         return [
-            'userName' => $this->developerResponsePayloadMock['items'][0]['login'],
-            'followBacks' =>
-                [
-                    'count' => 0,
-                    'userNames' => [],
-                ],
+            'userName' => $this->developerResponsePayloadMock['login'],
+            'followBacks' => [
+                'count' => 0,
+                'userNames' => [],
+            ],
         ];
     }
 
     protected function developerWithFollowersResponsePayload()
     {
         return [
-            'userName' => $this->developerResponsePayloadMock['items'][0]['login'],
-            'followBacks' =>
-                [
-                    'count' => count($this->followersResponsePayloadMock),
-                    'userNames' => array_map(fn($follower) => $follower['login'], $this->followersResponsePayloadMock),
-                ],
+            'userName' => $this->developerResponsePayloadMock['login'],
+            'followBacks' => [
+                'count' => count($this->followersResponsePayloadMock),
+                'userNames' => array_map(
+                    fn($follower) => $follower['login'],
+                    $this->followersResponsePayloadMock
+                ),
+            ],
         ];
     }
 
-    protected function developerWillBeFound()
+    protected function developerWillBeFoundWhitFollowers()
     {
-        $this->httpClientMockQueueAppend(
-            static::makeJsonResponse($this->developerResponsePayloadMock)
+        $this->setHttpClientMockQueue(
+            static::makeJsonResponse($this->developerResponsePayloadMock),
+            static::makeJsonResponse($this->followersResponsePayloadMock)
         );
     }
 
-    protected function developerFollowersWillBeFound()
+    protected function developerWillBeFoundWithoutFollowers()
     {
-        $this->httpClientMockQueueAppend(
-            $this::makeJsonResponse($this->followersResponsePayloadMock)
-        );
-    }
+        $this->developerResponsePayloadMock['followers'] = 0;
 
-    protected function developerFollowersWillBeEmpty()
-    {
-        $this->httpClientMockQueueAppend(
+        $this->setHttpClientMockQueue(
+            static::makeJsonResponse($this->developerResponsePayloadMock),
             static::makeJsonResponse()
         );
     }
